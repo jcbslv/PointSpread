@@ -1,8 +1,8 @@
-Chicago Bears	0.0	0.0	0.0	0.0	0	0	0
-Baltimore Ravens	0.0	0.0	0.0	0.0	0	0	0
-Detroit Lions	0.0	0.0	0.0	0.0	0	0	0
-Greenbay Packers	0.0	0.0	0.0	0.0	0	0	0
-Minnesota Vikings	0.0	0.0	0.0	0.0	0	0	0
-Cincinnatti Bengals	0.0	0.0	0.0	0.0	0	0	0
-Cleveland Browns	0.0	0.0	0.0	0.0	0	0	0
-Pittsburgh Steelers	0.0	0.0	0.0	0.0	0	0	0
+CHI	0.0	0.0	0.0	0.0	0	0	0
+DET	0.0	0.0	0.0	0.0	0	0	0
+GB	0.0	0.0	0.0	0.0	0	0	0
+MIN	0.0	0.0	0.0	0.0	0	0	0
+BAL	0.0	0.0	0.0	0.0	0	0	0
+PIT	0.0	0.0	0.0	0.0	0	0	0
+CIN	0.0	0.0	0.0	0.0	0	0	0
+CLE	0.0	0.0	0.0	0.0	0	0	0

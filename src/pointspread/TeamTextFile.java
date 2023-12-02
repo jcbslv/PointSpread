@@ -129,13 +129,13 @@ public final class TeamTextFile implements DAO<FootballTeam> {
             for (FootballTeam t : teams) {
                 // be sure to delimit the fields and records with the 
                 // appropriate character
-                out.print(t.getTeamName() + FIELD_SEP);
-                out.print(t.getPassYardsFor() + FIELD_SEP);
-                out.print(t.getPassYardsAgainst() + FIELD_SEP);
-                out.print(t.getRushYardsFor() + FIELD_SEP);
-                out.print(t.getRushYardsAgainst() + FIELD_SEP);
-                out.print(t.getTotalPointsFor() + FIELD_SEP);
-                out.print(t.getTotalPointsAgainst() + FIELD_SEP);
+                out.print(t.getTeamName() + FIELD_SEP );
+                out.print(t.getPassYardsFor() + FIELD_SEP );
+                out.print(t.getPassYardsAgainst() + FIELD_SEP );
+                out.print(t.getRushYardsFor() + FIELD_SEP );
+                out.print(t.getRushYardsAgainst() + FIELD_SEP );
+                out.print(t.getTotalPointsFor() + FIELD_SEP );
+                out.print(t.getTotalPointsAgainst() + FIELD_SEP );
                 out.println(t.getTurnovers());
             }
         // if an IOException occurs when the output stream is opened, print

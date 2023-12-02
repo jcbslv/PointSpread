@@ -38,11 +38,11 @@ public class PointSpread {
                 displayAllTeams();
             } else if (action.equalsIgnoreCase("add")) 
             {
-                addCustomer();
+                addTeam();
             } else if (action.equalsIgnoreCase("del") || action.equalsIgnoreCase("delete")) {
-                //deleteCustomer();
+                deleteTeam();
             } else if (action.equalsIgnoreCase("help") || action.equalsIgnoreCase("menu")) {
-                //displayMenu();
+                displayMenu();
             } else if (action.equalsIgnoreCase("exit")) {
                 System.out.println("Bye.\n");
             } else {
@@ -62,7 +62,7 @@ public class PointSpread {
     }
     
     public static void displayAllTeams() {
-        System.out.println("CUSTOMER LIST");
+        System.out.println("TEAM LIST");
 
         List<FootballTeam> teams = teamDAO.getAll();
         FootballTeam t;
@@ -77,7 +77,7 @@ public class PointSpread {
         System.out.println(sb.toString());
     }
     
-    public static void addCustomer() 
+    public static void addTeam() 
     {
         String teamName = Console.getLine("Enter team name: ");
         //String lastName = Console.getString("Enter last name: ");
@@ -91,6 +91,21 @@ public class PointSpread {
 
         System.out.println();
         System.out.println(teamName + " has been added.\n");
+    }
+
+    public static void deleteTeam() {
+        String team = Console.getString("Enter team to delete: ");
+
+        FootballTeam c = teamDAO.get(team);
+
+        System.out.println();
+        if (c != null) {
+            teamDAO.delete(c);
+            System.out.println(c.getTeamName()
+                    + " has been deleted.\n");
+        } else {
+            System.out.println("No team matches that name.\n");
+        }
     }
     
 }
