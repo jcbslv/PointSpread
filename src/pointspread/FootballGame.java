@@ -1,9 +1,9 @@
 package pointspread;
 
 public class FootballGame {
-    FootballTeam home;
-    FootballTeam away;
-    double audienceExcitementLevel;
+    private FootballTeam home;
+    private FootballTeam away;
+    private double audienceExcitementLevel;
 
     public FootballGame() {
         this(null, null, 0);
