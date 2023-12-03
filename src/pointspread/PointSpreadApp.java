@@ -70,14 +70,14 @@ public class PointSpreadApp {
         for (int i = 0; i < teams.size(); i++) {
             t = teams.get(i);
             sb.append(StringUtils.padWithSpaces(
-                    t.getTeamName(), 10));
-            sb.append(t.getPassYardsFor());
-            sb.append(t.getPassYardsAgainst());
-            sb.append(t.getRushYardsFor());
-            sb.append(t.getRushYardsAgainst());
-            sb.append(t.getTotalPointsFor());
-            sb.append(t.getTotalPointsAgainst());
-            sb.append(t.getTurnovers());
+                    t.getTeamName(), 8));
+            sb.append(t.getPassYardsFor()+"\t");
+            sb.append(t.getPassYardsAgainst()+"\t");
+            sb.append(t.getRushYardsFor()+"\t");
+            sb.append(t.getRushYardsAgainst()+"\t");
+            sb.append(t.getTotalPointsFor()+"\t");
+            sb.append(t.getTotalPointsAgainst()+"\t");
+            sb.append(t.getTurnovers()+"\t");
             sb.append("\n");
         }
         System.out.println(sb.toString());
@@ -110,5 +110,7 @@ public class PointSpreadApp {
             System.out.println("No team matches that name.\n");
         }
     }
+
+    
     
 }
