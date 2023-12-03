@@ -6,7 +6,7 @@ import java.util.List;
  *
  * @author jcb
  */
-public class PointSpread {
+public class PointSpreadApp {
     
     private static DAO<FootballTeam> teamDAO = null;
 
@@ -62,7 +62,7 @@ public class PointSpread {
     }
     
     public static void displayAllTeams() {
-        System.out.println("TEAM LIST");
+        System.out.println("TEAM LIST\n");
 
         List<FootballTeam> teams = teamDAO.getAll();
         FootballTeam t;
@@ -70,8 +70,14 @@ public class PointSpread {
         for (int i = 0; i < teams.size(); i++) {
             t = teams.get(i);
             sb.append(StringUtils.padWithSpaces(
-                    t.getTeamName(), 27));
-            //sb.append(c.getEmail());
+                    t.getTeamName(), 10));
+            sb.append(t.getPassYardsFor());
+            sb.append(t.getPassYardsAgainst());
+            sb.append(t.getRushYardsFor());
+            sb.append(t.getRushYardsAgainst());
+            sb.append(t.getTotalPointsFor());
+            sb.append(t.getTotalPointsAgainst());
+            sb.append(t.getTurnovers());
             sb.append("\n");
         }
         System.out.println(sb.toString());
@@ -80,13 +86,10 @@ public class PointSpread {
     public static void addTeam() 
     {
         String teamName = Console.getLine("Enter team name: ");
-        //String lastName = Console.getString("Enter last name: ");
-        //String email = Console.getString("Enter customer email: ");
 
         FootballTeam team = new FootballTeam();
         team.setTeamName(teamName);
-        //customer.setLastName(lastName);
-        //customer.setEmail(email);
+    
         teamDAO.add(team);
 
         System.out.println();
