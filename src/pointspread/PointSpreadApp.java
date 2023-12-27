@@ -41,7 +41,9 @@ public class PointSpreadApp {
                 addTeam();
             } else if (action.equalsIgnoreCase("del") || action.equalsIgnoreCase("delete")) {
                 deleteTeam();
-            } else if (action.equalsIgnoreCase("help") || action.equalsIgnoreCase("menu")) {
+            } else if (action.equalsIgnoreCase("upd") || action.equalsIgnoreCase("update")) {
+                updateTeam();
+            }else if (action.equalsIgnoreCase("help") || action.equalsIgnoreCase("menu")) {
                 displayMenu();
             } else if (action.equalsIgnoreCase("exit")) {
                 System.out.println("Bye.\n");
@@ -57,6 +59,7 @@ public class PointSpreadApp {
         System.out.println("list    - List all teams");
         System.out.println("add     - Add a team");
         System.out.println("del     - Delete a team");
+        System.out.println("upd     - Update a team");
         System.out.println("help    - Show this menu");
         System.out.println("exit    - Exit this application\n");
     }
@@ -111,6 +114,16 @@ public class PointSpreadApp {
         }
     }
 
-    
+    public static void updateTeam() {
+        String team = Console.getString("Enter team to update: ");
+
+        FootballTeam t = teamDAO.get(team);
+        int pts = Console.getInt("Enter point total: ");
+        
+        if (t != null) {
+            t.setTotalPointsFor(pts);
+            teamDAO.update(t);
+        }
+    }
     
 }
