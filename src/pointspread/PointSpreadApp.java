@@ -223,7 +223,7 @@ public class PointSpreadApp {
         String productString
                 = StringUtils.padWithSpaces(p.getTeamName(), 12)
                 + StringUtils.padWithSpaces(p.getFormattedNum(p.getTotalPointsFor()), 12)
-                + p.getFormattedNum(p.getTotalPointsAgainst()) + "\t\t" + p.getFormattedNum(p.getPassYardsFor())
+                + p.getFormattedNum(p.getTotalPointsAgainst()) + "\t" + p.getFormattedNum(p.getPassYardsFor())
                 ;
 
         System.out.println(productString);
