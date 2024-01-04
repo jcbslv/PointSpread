@@ -12,16 +12,20 @@ public class FootballTeam {
     private double rushYardsAgainst;
     private int totalPointsFor;
     private int totalPointsAgainst;
-    private int turnovers;
+    private int turnoversCommitted;
+    private int turnoversCaused;  
+    private int gamesPlayed;  
     
+
     public FootballTeam() {
-        this("", 0, 0, 0, 0, 0, 0, 0);
+        this("", 0, 0, 0, 0, 0, 0, 0, 0, 0);
     }
 
     public FootballTeam(String teamName, double passYardsFor, 
                         double passYardsAgainst, double rushYardsFor,
                         double rushYardsAgainst, int totalPointsFor,
-                        int totalPointsAgainst, int turnovers) {
+                        int totalPointsAgainst, int turnoversCommitted, 
+                        int turnoversCaused, int gamesPlayed) {
         this.teamName = teamName;
         this.passYardsFor = passYardsFor;
         this.passYardsAgainst = passYardsAgainst;
@@ -29,7 +33,9 @@ public class FootballTeam {
         this.rushYardsAgainst = rushYardsAgainst;
         this.totalPointsFor = totalPointsFor;
         this.totalPointsAgainst = totalPointsAgainst;
-        this.turnovers = turnovers;
+        this.turnoversCommitted = turnoversCommitted;
+        this.turnoversCaused = turnoversCaused;
+        this.gamesPlayed = gamesPlayed;
     }
 
     /**
@@ -131,16 +137,39 @@ public class FootballTeam {
     }
 
     /**
-     * @return the turnovers
+     * @return turnoversCaused
      */
-    public int getTurnovers() {
-        return turnovers;
+    public int getTurnoversCaused() {
+        return turnoversCaused;
     }
 
     /**
-     * @param turnovers the turnovers to set
+     * @param turnoversCaused
      */
-    public void setTurnovers(int turnovers) {
-        this.turnovers = turnovers;
+    public void setTurnoversCaused(int turnoversCaused) {
+        this.turnoversCaused = turnoversCaused;
     }
+
+    /**
+     * @return getTurnoversCommitted
+     */
+    public int getTurnoversCommitted() {
+        return turnoversCommitted;
+    }
+
+    /**
+     * @param turnoversCommitted
+     */
+    public void setTurnoversCommitted(int turnoversCommitted) {
+        this.turnoversCommitted = turnoversCommitted;
+    }
+
+    public int getGamesPlayed() {
+        return gamesPlayed;
+    }
+
+    public void setGamesPlayed(int gamesPlayed) {
+        this.gamesPlayed = gamesPlayed;
+    }
+
 }

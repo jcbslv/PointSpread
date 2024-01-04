@@ -43,15 +43,16 @@ public class PointSpreadApp {
                 deleteTeam();
             } else if (action.equalsIgnoreCase("upd") || action.equalsIgnoreCase("update")) {
                 updateTeam();
-            }else if (action.equalsIgnoreCase("help") || action.equalsIgnoreCase("menu")) {
+            } else if (action.equalsIgnoreCase("game")) {
+                addGame();
+            } else if (action.equalsIgnoreCase("help") || action.equalsIgnoreCase("menu")) {
                 displayMenu();
             } else if (action.equalsIgnoreCase("exit")) {
                 System.out.println("Bye.\n");
             } else {
                 System.out.println("Error! Not a valid command.\n");
             }
-        }
-        
+        }        
     }
     
     public static void displayMenu() {
@@ -60,6 +61,7 @@ public class PointSpreadApp {
         System.out.println("add     - Add a team");
         System.out.println("del     - Delete a team");
         System.out.println("upd     - Update a team");
+        System.out.println("game    - Add game info");
         System.out.println("help    - Show this menu");
         System.out.println("exit    - Exit this application\n");
     }
@@ -80,7 +82,9 @@ public class PointSpreadApp {
             sb.append(t.getRushYardsAgainst()+"\t");
             sb.append(t.getTotalPointsFor()+"\t");
             sb.append(t.getTotalPointsAgainst()+"\t");
-            sb.append(t.getTurnovers()+"\t");
+            sb.append(t.getTurnoversCommitted()+"\t");
+            sb.append(t.getTurnoversCaused()+"\t");
+            sb.append(t.getGamesPlayed()+"\t");
             sb.append("\n");
         }
         System.out.println(sb.toString());
@@ -121,9 +125,53 @@ public class PointSpreadApp {
         int pts = Console.getInt("Enter point total: ");
         
         if (t != null) {
-            t.setTotalPointsFor(pts);
+            t.setTotalPointsFor(t.getTotalPointsFor() + pts);
             teamDAO.update(t);
         }
     }
     
+    public static void addGame() {
+        
+        String home = Console.getString("Enter home team: ");
+        String away = Console.getString("Enter away team: ");
+        FootballTeam h = teamDAO.get(home);
+        FootballTeam a = teamDAO.get(away);
+        
+        int homeScore = Console.getInt("Enter home score: ");
+        int awayScore = Console.getInt("Enter away score: ");
+
+        double homePassYds = Console.getDouble("Enter home pass yards: ");
+        double awayPassYds = Console.getDouble("Enter away pass yards: ");
+        double homeRushYds = Console.getDouble("Enter home rush yards: ");
+        double awayRushYds = Console.getDouble("Enter away rush yards: ");
+        int homeTrnOvr = Console.getInt("Enter home turnovers: ");
+        int awayTrnOvr = Console.getInt("Enter away turnovers: ");
+
+        //FootballGame game = new FootballGame(h, a, homeScore, awayScore, homePassYds, awayPassYds, homeRushYds, awayRushYds, homeTrnOvr, awayTrnOvr);
+        if (h != null) {
+            h.setTotalPointsFor(h.getTotalPointsFor() + homeScore);
+            h.setTotalPointsAgainst(h.getTotalPointsAgainst() + awayScore);
+            h.setPassYardsFor(h.getPassYardsFor() + homePassYds);
+            h.setPassYardsAgainst(h.getPassYardsAgainst() + awayPassYds);
+            h.setRushYardsFor(h.getRushYardsFor() + homeRushYds);
+            h.setRushYardsAgainst(h.getRushYardsAgainst() + awayRushYds);
+            h.setTurnoversCommitted(h.getTurnoversCommitted() + homeTrnOvr);
+            h.setTurnoversCaused(h.getTurnoversCaused() + awayTrnOvr);
+            h.setGamesPlayed(h.getGamesPlayed() + 1);
+            teamDAO.update(h);
+        }
+
+        if (a != null) {
+            a.setTotalPointsFor(a.getTotalPointsFor() + awayScore);
+            a.setTotalPointsAgainst(a.getTotalPointsAgainst() + homeScore);
+            a.setPassYardsFor(a.getPassYardsFor() + awayPassYds);
+            a.setPassYardsAgainst(a.getPassYardsAgainst() + homePassYds);
+            a.setRushYardsFor(a.getRushYardsFor() + awayRushYds);
+            a.setRushYardsAgainst(a.getRushYardsAgainst() + homeRushYds);
+            a.setTurnoversCommitted(a.getTurnoversCommitted() + awayTrnOvr);
+            a.setTurnoversCaused(a.getTurnoversCaused() + homeTrnOvr);
+            a.setGamesPlayed(a.getGamesPlayed() + 1);
+            teamDAO.update(a);
+        }
+    }
 }

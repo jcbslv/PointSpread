@@ -51,7 +51,9 @@ public final class TeamTextFile implements DAO<FootballTeam> {
                     String rushYardsAgainst = fields[4];
                     String totalPointsFor = fields[5];
                     String totalPointsAgainst = fields[6];
-                    String turnovers = fields[7];
+                    String turnoversCommitted = fields[7];
+                    String turnoversCaused = fields[8];
+                    String gamesPlayed = fields[9];
                     
                     // load the array list with Customer objects created from
                     // the data in the file
@@ -63,7 +65,9 @@ public final class TeamTextFile implements DAO<FootballTeam> {
                             Double.parseDouble(rushYardsAgainst), 
                             Integer.parseInt(totalPointsFor), 
                             Integer.parseInt(totalPointsAgainst), 
-                            Integer.parseInt(turnovers));
+                            Integer.parseInt(turnoversCommitted),
+                            Integer.parseInt(turnoversCaused),
+                            Integer.parseInt(gamesPlayed));
                     teams.add(t);
                     line = in.readLine();
                 }
@@ -136,7 +140,9 @@ public final class TeamTextFile implements DAO<FootballTeam> {
                 out.print(t.getRushYardsAgainst() + FIELD_SEP );
                 out.print(t.getTotalPointsFor() + FIELD_SEP );
                 out.print(t.getTotalPointsAgainst() + FIELD_SEP );
-                out.println(t.getTurnovers());
+                out.print(t.getTurnoversCommitted() + FIELD_SEP );
+                out.print(t.getTurnoversCaused() + FIELD_SEP );
+                out.println(t.getGamesPlayed());
             }
         // if an IOException occurs when the output stream is opened, print
         // the exception to the console and return false to the calling method
