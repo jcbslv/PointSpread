@@ -1,5 +1,7 @@
 package pointspread;
 
+import java.text.NumberFormat;
+
 /**
  *
  * @author jcb
@@ -10,10 +12,10 @@ public class FootballTeam {
     private double passYardsAgainst;
     private double rushYardsFor;
     private double rushYardsAgainst;
-    private int totalPointsFor;
-    private int totalPointsAgainst;
-    private int turnoversCommitted;
-    private int turnoversCaused;  
+    private double totalPointsFor;
+    private double totalPointsAgainst;
+    private double turnoversCommitted;
+    private double turnoversCaused;  
     private int gamesPlayed;  
     
 
@@ -23,9 +25,9 @@ public class FootballTeam {
 
     public FootballTeam(String teamName, double passYardsFor, 
                         double passYardsAgainst, double rushYardsFor,
-                        double rushYardsAgainst, int totalPointsFor,
-                        int totalPointsAgainst, int turnoversCommitted, 
-                        int turnoversCaused, int gamesPlayed) {
+                        double rushYardsAgainst, double totalPointsFor,
+                        double totalPointsAgainst, double turnoversCommitted, 
+                        double turnoversCaused, int gamesPlayed) {
         this.teamName = teamName;
         this.passYardsFor = passYardsFor;
         this.passYardsAgainst = passYardsAgainst;
@@ -36,6 +38,11 @@ public class FootballTeam {
         this.turnoversCommitted = turnoversCommitted;
         this.turnoversCaused = turnoversCaused;
         this.gamesPlayed = gamesPlayed;
+    }
+
+     public String getFormattedNum(double d) {
+        NumberFormat num = NumberFormat.getNumberInstance();
+        return num.format(d);
     }
 
     /**
@@ -111,56 +118,56 @@ public class FootballTeam {
     /**
      * @return the totalPointsFor
      */
-    public int getTotalPointsFor() {
+    public double getTotalPointsFor() {
         return totalPointsFor;
     }
 
     /**
-     * @param totalPointsFor the totalPointsFor to set
+     * @param d the totalPointsFor to set
      */
-    public void setTotalPointsFor(int totalPointsFor) {
-        this.totalPointsFor = totalPointsFor;
+    public void setTotalPointsFor(double d) {
+        this.totalPointsFor = d;
     }
 
     /**
      * @return the totalPointsAgainst
      */
-    public int getTotalPointsAgainst() {
+    public double getTotalPointsAgainst() {
         return totalPointsAgainst;
     }
 
     /**
      * @param totalPointsAgainst the totalPointsAgainst to set
      */
-    public void setTotalPointsAgainst(int totalPointsAgainst) {
+    public void setTotalPointsAgainst(double totalPointsAgainst) {
         this.totalPointsAgainst = totalPointsAgainst;
     }
 
     /**
      * @return turnoversCaused
      */
-    public int getTurnoversCaused() {
+    public double getTurnoversCaused() {
         return turnoversCaused;
     }
 
     /**
      * @param turnoversCaused
      */
-    public void setTurnoversCaused(int turnoversCaused) {
+    public void setTurnoversCaused(double turnoversCaused) {
         this.turnoversCaused = turnoversCaused;
     }
 
     /**
      * @return getTurnoversCommitted
      */
-    public int getTurnoversCommitted() {
+    public double getTurnoversCommitted() {
         return turnoversCommitted;
     }
 
     /**
      * @param turnoversCommitted
      */
-    public void setTurnoversCommitted(int turnoversCommitted) {
+    public void setTurnoversCommitted(double turnoversCommitted) {
         this.turnoversCommitted = turnoversCommitted;
     }
 

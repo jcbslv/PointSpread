@@ -1,5 +1,6 @@
 package pointspread;
 
+import java.sql.*;
 import java.util.List;
 
 /**
@@ -9,14 +10,22 @@ import java.util.List;
 public class PointSpreadApp {
     
     private static DAO<FootballTeam> teamDAO = null;
+    private static Connection connection;
 
     /**
      * @param args the command line arguments
      */
     public static void main(String[] args) 
     {
+
+        try {
+            String dbUrl = "jdbc:sqlite:league.db";
+            connection = DriverManager.getConnection(dbUrl);
+        } catch (SQLException e) {
+            System.err.println(e);
+            return;
+        }
         
-        // TODO code application logic here
         // display a welcome message
         System.out.println("\n+-----------------------------------------------+");
         System.out.println("Welcome to the Team Manager\n");
@@ -45,6 +54,8 @@ public class PointSpreadApp {
                 updateTeam();
             } else if (action.equalsIgnoreCase("game")) {
                 addGame();
+            } else if (action.equalsIgnoreCase("db")) {
+                displayDB();
             } else if (action.equalsIgnoreCase("help") || action.equalsIgnoreCase("menu")) {
                 displayMenu();
             } else if (action.equalsIgnoreCase("exit")) {
@@ -52,7 +63,12 @@ public class PointSpreadApp {
             } else {
                 System.out.println("Error! Not a valid command.\n");
             }
-        }        
+        }
+        try {
+            connection.close();
+        } catch (SQLException e) {
+            System.err.println(e);
+        }
     }
     
     public static void displayMenu() {
@@ -122,7 +138,7 @@ public class PointSpreadApp {
         String team = Console.getString("Enter team to update: ");
 
         FootballTeam t = teamDAO.get(team);
-        int pts = Console.getInt("Enter point total: ");
+        double pts = Console.getDouble("Enter point total: ");
         
         if (t != null) {
             t.setTotalPointsFor(t.getTotalPointsFor() + pts);
@@ -137,15 +153,15 @@ public class PointSpreadApp {
         FootballTeam h = teamDAO.get(home);
         FootballTeam a = teamDAO.get(away);
         
-        int homeScore = Console.getInt("Enter home score: ");
-        int awayScore = Console.getInt("Enter away score: ");
+        double homeScore = Console.getDouble("Enter home score: ");
+        double awayScore = Console.getDouble("Enter away score: ");
 
         double homePassYds = Console.getDouble("Enter home pass yards: ");
         double awayPassYds = Console.getDouble("Enter away pass yards: ");
         double homeRushYds = Console.getDouble("Enter home rush yards: ");
         double awayRushYds = Console.getDouble("Enter away rush yards: ");
-        int homeTrnOvr = Console.getInt("Enter home turnovers: ");
-        int awayTrnOvr = Console.getInt("Enter away turnovers: ");
+        double homeTrnOvr = Console.getDouble("Enter home turnovers: ");
+        double awayTrnOvr = Console.getDouble("Enter away turnovers: ");
 
         //FootballGame game = new FootballGame(h, a, homeScore, awayScore, homePassYds, awayPassYds, homeRushYds, awayRushYds, homeTrnOvr, awayTrnOvr);
         if (h != null) {
@@ -174,4 +190,43 @@ public class PointSpreadApp {
             teamDAO.update(a);
         }
     }
+
+    public static void displayDB() {
+        try (Statement statement = connection.createStatement();
+            ResultSet rs = statement.executeQuery("SELECT * FROM Teams")) {
+            FootballTeam t;
+
+            System.out.println("Team list:");
+            while (rs.next()) {
+                String name = rs.getString("Team Name");
+                double ptsFor = rs.getDouble("Ttl Pts For");
+                double ptsAll = rs.getDouble("Ttl Pts All");
+                double passYdsFor = rs.getDouble("Ttl Pass Yds For");
+                double passYdsAll = rs.getDouble("Ttl Pass Yds All");
+                double rushYdsFor = rs.getDouble("Ttl Rush Yds For");
+                double rushYdsAll = rs.getDouble("Ttl Rush Yds All");
+                double trnovrCom = rs.getDouble("Ttl Trnovr Com");
+                double trnovrCsd = rs.getDouble("Ttl Trnovr Csd");
+                int gamesPlayed = rs.getInt("Games Played");
+
+                t = new FootballTeam(name, ptsFor, ptsAll, passYdsFor, passYdsAll, rushYdsFor, rushYdsAll, trnovrCom, trnovrCsd, gamesPlayed);
+
+                printProduct(t);
+            }
+            System.out.println();
+        } catch (SQLException e) {
+            System.out.println(e);
+        }
+    }
+
+    private static void printProduct(FootballTeam p) {
+        String productString
+                = StringUtils.padWithSpaces(p.getTeamName(), 12)
+                + StringUtils.padWithSpaces(p.getFormattedNum(p.getTotalPointsFor()), 12)
+                + p.getFormattedNum(p.getTotalPointsAgainst()) + "\t\t" + p.getFormattedNum(p.getPassYardsFor())
+                ;
+
+        System.out.println(productString);
+    }
+
 }

@@ -63,10 +63,10 @@ public final class TeamTextFile implements DAO<FootballTeam> {
                             Double.parseDouble(passYardsAgainst),
                             Double.parseDouble(rushYardsFor), 
                             Double.parseDouble(rushYardsAgainst), 
-                            Integer.parseInt(totalPointsFor), 
-                            Integer.parseInt(totalPointsAgainst), 
-                            Integer.parseInt(turnoversCommitted),
-                            Integer.parseInt(turnoversCaused),
+                            Double.parseDouble(totalPointsFor), 
+                            Double.parseDouble(totalPointsAgainst), 
+                            Double.parseDouble(turnoversCommitted),
+                            Double.parseDouble(turnoversCaused),
                             Integer.parseInt(gamesPlayed));
                     teams.add(t);
                     line = in.readLine();
