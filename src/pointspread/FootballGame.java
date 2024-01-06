@@ -2,24 +2,25 @@ package pointspread;
 
  public class FootballGame {
 
-    private FootballTeam home;
-    private FootballTeam away;
-    private int homeScore;
-    private int awayScore;
+    private String home;
+    private String away;
+    private double homeScore;
+    private double awayScore;
     private double homePassYds;
     private double awayPassYds;
     private double homeRushYds;
     private double awayRushYds;
-    private int homeTrnOvr;
-    private int awayTrnOvr;
-   
-    public FootballGame(FootballTeam home, FootballTeam away) {
+    private double homeTrnOvr;
+    private double awayTrnOvr;
+    
+    
+    public FootballGame(String home, String away) {
         this.home = home;
         this.away = away;
     }
 
-    public FootballGame(FootballTeam home, FootballTeam away, int homeScore, int awayScore, double homePassYds,
-            double awayPassYds, double homeRushYds, double awayRushYds, int homeTrnOvr, int awayTrnOvr) {
+    public FootballGame(String home, String away, double homeScore, double awayScore, double homePassYds,
+            double awayPassYds, double homeRushYds, double awayRushYds, double homeTrnOvr, double awayTrnOvr) {
         this.home = home;
         this.away = away;
         this.homeScore = homeScore;
@@ -32,25 +33,29 @@ package pointspread;
         this.awayTrnOvr = awayTrnOvr;
     }
 
-    public FootballTeam getHome() {
+    public String getHome() {
         return home;
     }
-    public void setHome(FootballTeam home) {
+
+    public void setHome(String home) {
         this.home = home;
     }
-    public FootballTeam getAway() {
+
+    public String getAway() {
         return away;
     }
-    public void setAway(FootballTeam away) {
+
+    public void setAway(String away) {
         this.away = away;
     }
-    public int getHomeScore() {
+
+    public double getHomeScore() {
         return homeScore;
     }
     public void setHomeScore(int homeScore) {
         this.homeScore = homeScore;
     }
-    public int getAwayScore() {
+    public double getAwayScore() {
         return awayScore;
     }
     public void setAwayScore(int awayScore) {
@@ -80,13 +85,13 @@ package pointspread;
     public void setAwayRushYds(double awayRushYds) {
         this.awayRushYds = awayRushYds;
     }
-    public int getHomeTrnOvr() {
+    public double getHomeTrnOvr() {
         return homeTrnOvr;
     }
     public void setHomeTrnOvr(int homeTrnOvr) {
         this.homeTrnOvr = homeTrnOvr;
     }
-    public int getAwayTrnOvr() {
+    public double getAwayTrnOvr() {
         return awayTrnOvr;
     }
     public void setAwayTrnOvr(int awayTrnOvr) {

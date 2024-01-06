@@ -32,8 +32,11 @@ public class PointSpreadApp {
 
         // set the class variables
         teamDAO = new TeamTextFile();
+        GameDB gameDB = new GameDB();
         
         displayMenu();
+
+        
         
         String action = "";
         while (!action.equalsIgnoreCase("exit")) 
@@ -59,7 +62,7 @@ public class PointSpreadApp {
             } else if (action.equalsIgnoreCase("team")) {
                 displayTeamDB();
             } else if (action.equalsIgnoreCase("gdb")) {
-                addGameDB();
+                addGameDB(gameDB);
             } else if (action.equalsIgnoreCase("help") || action.equalsIgnoreCase("menu")) {
                 displayMenu();
             } else if (action.equalsIgnoreCase("exit")) {
@@ -73,6 +76,7 @@ public class PointSpreadApp {
         } catch (SQLException e) {
             System.err.println(e);
         }
+
     }
     
     public static void displayMenu() {
@@ -254,7 +258,7 @@ public class PointSpreadApp {
         }
     }
 
-    public static void addGameDB() {
+    public static FootballGame addGameDB(GameDB db) {
 
         String home = Console.getString("Enter home team: ");
         String away = Console.getString("Enter away team: ");
@@ -269,10 +273,20 @@ public class PointSpreadApp {
         double homeTrnOvr = Console.getDouble("Enter home turnovers: ");
         double awayTrnOvr = Console.getDouble("Enter away turnovers: ");
 
+        FootballGame g = new FootballGame(home, away, homeScore, awayScore, homePassYds, awayPassYds, homeRushYds, awayRushYds, homeTrnOvr, awayTrnOvr);
+        
+        
+        //GameDB gameDB = new GameDB();
+        boolean success = db.add(g);
+        if (success) {
+            System.out.println("Game Added\n");
+        } else {
+            System.out.println("Error! Unable to add game\n");
+        }
+        
+
         String addHome = "INSERT INTO " + home + "(PtsFor, PtsAll, PassYdsFor, PassYdsAll, RushYdsFor, RushYdsAll, TrnOvrsCOm, TrnOvrsCsd) "
                     + "VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
-        
-        //PreparedStatement ps = connection.prepareStatement(sql);
 
         try (PreparedStatement ps = connection.prepareStatement(addHome)) {
             ps.setDouble(1, homeScore);
@@ -307,7 +321,8 @@ public class PointSpreadApp {
         } catch (SQLException e) {
             System.out.println(e);
         }
-        
+  
+        return g;
     }
 
     private static void printTeam(FootballTeam p) {
