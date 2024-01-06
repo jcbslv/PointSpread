@@ -56,6 +56,10 @@ public class PointSpreadApp {
                 addGame();
             } else if (action.equalsIgnoreCase("db")) {
                 displayDB();
+            } else if (action.equalsIgnoreCase("team")) {
+                displayTeamDB();
+            } else if (action.equalsIgnoreCase("gdb")) {
+                addGameDB();
             } else if (action.equalsIgnoreCase("help") || action.equalsIgnoreCase("menu")) {
                 displayMenu();
             } else if (action.equalsIgnoreCase("exit")) {
@@ -211,7 +215,7 @@ public class PointSpreadApp {
 
                 t = new FootballTeam(name, ptsFor, ptsAll, passYdsFor, passYdsAll, rushYdsFor, rushYdsAll, trnovrCom, trnovrCsd, gamesPlayed);
 
-                printProduct(t);
+                printTeam(t);
             }
             System.out.println();
         } catch (SQLException e) {
@@ -219,11 +223,104 @@ public class PointSpreadApp {
         }
     }
 
-    private static void printProduct(FootballTeam p) {
+    public static void displayTeamDB() {
+
+        String home = Console.getString("Enter home team: ");
+        //String away = Console.getString("Enter away team: ");
+        try (Statement statement = connection.createStatement();
+            ResultSet rs = statement.executeQuery("SELECT * FROM " + home)) {
+            FootballTeam t;
+
+            System.out.println(home + " Stats:");
+            while (rs.next()) {
+                //String name = rs.getString("Team Name");
+                double ptsFor = rs.getDouble("PtsFor");
+                double ptsAll = rs.getDouble("PtsAll");
+                double passYdsFor = rs.getDouble("PassYdsFor");
+                double passYdsAll = rs.getDouble("PassYdsAll");
+                double rushYdsFor = rs.getDouble("RushYdsFor");
+                double rushYdsAll = rs.getDouble("RushYdsAll");
+                double trnovrCom = rs.getDouble("TrnOvrsCom");
+                double trnovrCsd = rs.getDouble("TrnOvrsCsd");
+                //int gamesPlayed = rs.getInt("Games Played");
+
+                t = new FootballTeam(home, ptsFor, ptsAll, passYdsFor, passYdsAll, rushYdsFor, rushYdsAll, trnovrCom, trnovrCsd, 0);
+
+                printTeam(t);
+            }
+            System.out.println();
+        } catch (SQLException e) {
+            System.out.println(e);
+        }
+    }
+
+    public static void addGameDB() {
+
+        String home = Console.getString("Enter home team: ");
+        String away = Console.getString("Enter away team: ");
+
+        double homeScore = Console.getDouble("Enter home score: ");
+        double awayScore = Console.getDouble("Enter away score: ");
+
+        double homePassYds = Console.getDouble("Enter home pass yards: ");
+        double awayPassYds = Console.getDouble("Enter away pass yards: ");
+        double homeRushYds = Console.getDouble("Enter home rush yards: ");
+        double awayRushYds = Console.getDouble("Enter away rush yards: ");
+        double homeTrnOvr = Console.getDouble("Enter home turnovers: ");
+        double awayTrnOvr = Console.getDouble("Enter away turnovers: ");
+
+        String addHome = "INSERT INTO " + home + "(PtsFor, PtsAll, PassYdsFor, PassYdsAll, RushYdsFor, RushYdsAll, TrnOvrsCOm, TrnOvrsCsd) "
+                    + "VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
+        
+        //PreparedStatement ps = connection.prepareStatement(sql);
+
+        try (PreparedStatement ps = connection.prepareStatement(addHome)) {
+            ps.setDouble(1, homeScore);
+            ps.setDouble(2, awayScore);
+            ps.setDouble(3, homePassYds);
+            ps.setDouble(4, awayPassYds);
+            ps.setDouble(5, homeRushYds);
+            ps.setDouble(6, awayRushYds);
+            ps.setDouble(7, homeTrnOvr);
+            ps.setDouble(8, awayTrnOvr);
+            ps.executeUpdate();
+            
+            System.out.println();
+        } catch (SQLException e) {
+            System.out.println(e);
+        }
+
+        String addAway = "INSERT INTO " + away + "(PtsFor, PtsAll, PassYdsFor, PassYdsAll, RushYdsFor, RushYdsAll, TrnOvrsCOm, TrnOvrsCsd) "
+                    + "VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
+        try (PreparedStatement ps = connection.prepareStatement(addAway)) {
+            ps.setDouble(1, awayScore);
+            ps.setDouble(2, homeScore);
+            ps.setDouble(3, awayPassYds);
+            ps.setDouble(4, homePassYds);
+            ps.setDouble(5, awayRushYds);
+            ps.setDouble(6, homeRushYds);
+            ps.setDouble(7, awayTrnOvr);
+            ps.setDouble(8, homeTrnOvr);
+            ps.executeUpdate();
+            
+            System.out.println();
+        } catch (SQLException e) {
+            System.out.println(e);
+        }
+        
+    }
+
+    private static void printTeam(FootballTeam p) {
         String productString
-                = StringUtils.padWithSpaces(p.getTeamName(), 12)
-                + StringUtils.padWithSpaces(p.getFormattedNum(p.getTotalPointsFor()), 12)
-                + p.getFormattedNum(p.getTotalPointsAgainst()) + "\t" + p.getFormattedNum(p.getPassYardsFor())
+                = //StringUtils.padWithSpaces(p.getTeamName(), 8)
+                StringUtils.padWithSpaces(p.getFormattedNum(p.getTotalPointsFor()), 8)
+                + StringUtils.padWithSpaces(p.getFormattedNum(p.getTotalPointsAgainst()), 8)
+                + StringUtils.padWithSpaces(p.getFormattedNum(p.getPassYardsFor()), 8)
+                + StringUtils.padWithSpaces(p.getFormattedNum(p.getPassYardsAgainst()), 8)
+                + StringUtils.padWithSpaces(p.getFormattedNum(p.getRushYardsFor()), 8)
+                + StringUtils.padWithSpaces(p.getFormattedNum(p.getRushYardsAgainst()), 8)
+                + StringUtils.padWithSpaces(p.getFormattedNum(p.getTurnoversCommitted()), 8)
+                + StringUtils.padWithSpaces(p.getFormattedNum(p.getTurnoversCaused()), 8)
                 ;
 
         System.out.println(productString);

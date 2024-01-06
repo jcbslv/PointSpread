@@ -8,12 +8,12 @@ import java.text.NumberFormat;
  */
 public class FootballTeam {
     private String teamName;
+    private double totalPointsFor;
+    private double totalPointsAgainst;
     private double passYardsFor;
     private double passYardsAgainst;
     private double rushYardsFor;
     private double rushYardsAgainst;
-    private double totalPointsFor;
-    private double totalPointsAgainst;
     private double turnoversCommitted;
     private double turnoversCaused;  
     private int gamesPlayed;  
@@ -23,18 +23,18 @@ public class FootballTeam {
         this("", 0, 0, 0, 0, 0, 0, 0, 0, 0);
     }
 
-    public FootballTeam(String teamName, double passYardsFor, 
+    public FootballTeam(String teamName, double passYardsFor, double totalPointsFor,
+                        double totalPointsAgainst,
                         double passYardsAgainst, double rushYardsFor,
-                        double rushYardsAgainst, double totalPointsFor,
-                        double totalPointsAgainst, double turnoversCommitted, 
+                        double rushYardsAgainst, double turnoversCommitted, 
                         double turnoversCaused, int gamesPlayed) {
         this.teamName = teamName;
+        this.totalPointsFor = totalPointsFor;
+        this.totalPointsAgainst = totalPointsAgainst;
         this.passYardsFor = passYardsFor;
         this.passYardsAgainst = passYardsAgainst;
         this.rushYardsFor = rushYardsFor;
         this.rushYardsAgainst = rushYardsAgainst;
-        this.totalPointsFor = totalPointsFor;
-        this.totalPointsAgainst = totalPointsAgainst;
         this.turnoversCommitted = turnoversCommitted;
         this.turnoversCaused = turnoversCaused;
         this.gamesPlayed = gamesPlayed;
