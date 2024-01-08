@@ -1,6 +1,8 @@
 package pointspread;
 
- public class FootballGame {
+import java.text.NumberFormat;
+
+public class FootballGame {
 
     private String home;
     private String away;
@@ -31,6 +33,11 @@ package pointspread;
         this.awayRushYds = awayRushYds;
         this.homeTrnOvr = homeTrnOvr;
         this.awayTrnOvr = awayTrnOvr;
+    }
+
+    public String getFormattedNum(double d) {
+        NumberFormat num = NumberFormat.getNumberInstance();
+        return num.format(d);
     }
 
     public String getHome() {

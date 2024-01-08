@@ -23,8 +23,8 @@ public class FootballTeam {
         this("", 0, 0, 0, 0, 0, 0, 0, 0, 0);
     }
 
-    public FootballTeam(String teamName, double passYardsFor, double totalPointsFor,
-                        double totalPointsAgainst,
+    public FootballTeam(String teamName, double totalPointsFor,
+                        double totalPointsAgainst, double passYardsFor, 
                         double passYardsAgainst, double rushYardsFor,
                         double rushYardsAgainst, double turnoversCommitted, 
                         double turnoversCaused, int gamesPlayed) {
@@ -40,7 +40,7 @@ public class FootballTeam {
         this.gamesPlayed = gamesPlayed;
     }
 
-     public String getFormattedNum(double d) {
+    public String getFormattedNum(double d) {
         NumberFormat num = NumberFormat.getNumberInstance();
         return num.format(d);
     }
