@@ -42,7 +42,6 @@ public class GameDB implements DAO<FootballGame> {
                     return null;
                 }
              } catch (SQLException e) {
-                // TODO Auto-generated catch block
                 e.printStackTrace();
                 return null;
             }

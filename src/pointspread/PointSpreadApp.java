@@ -52,6 +52,8 @@ public class PointSpreadApp {
                 displayTeamDB();
             } else if (action.equalsIgnoreCase("gdb")) {
                 addGameDB(gameDB);
+            } else if (action.equalsIgnoreCase("avg")) {
+                getAvgStats();
             } else if (action.equalsIgnoreCase("help") || action.equalsIgnoreCase("menu")) {
                 displayMenu();
             } else if (action.equalsIgnoreCase("exit")) {
@@ -166,8 +168,8 @@ public class PointSpreadApp {
 
         FootballGame g = new FootballGame(home, away, homeScore, awayScore, homePassYds, awayPassYds, homeRushYds, awayRushYds, homeTrnOvr, awayTrnOvr);
         
-        
-        //GameDB gameDB = new GameDB();
+// add game to league db
+
         boolean success = db.add(g);
         if (success) {
             System.out.println("Game Added\n");
@@ -175,6 +177,7 @@ public class PointSpreadApp {
             System.out.println("Error! Unable to add game\n");
         }
         
+// add home team stats to team's db
 
         String addHome = "INSERT INTO " + home + "(PtsFor, PtsAll, PassYdsFor, PassYdsAll, RushYdsFor, RushYdsAll, TrnOvrsCOm, TrnOvrsCsd) "
                     + "VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
@@ -195,6 +198,8 @@ public class PointSpreadApp {
             System.out.println(e);
         }
 
+// add away team stats to team's db
+
         String addAway = "INSERT INTO " + away + "(PtsFor, PtsAll, PassYdsFor, PassYdsAll, RushYdsFor, RushYdsAll, TrnOvrsCOm, TrnOvrsCsd) "
                     + "VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
         try (PreparedStatement ps = connection.prepareStatement(addAway)) {
@@ -214,6 +219,96 @@ public class PointSpreadApp {
         }
   
         return g;
+    }
+
+    public static void getAvgStats() {
+        //Statement statement = connection.createStatement();
+        String home = Console.getString("Enter team: ");
+        System.out.println(home + " AVG Stats:");
+            String title
+                = StringUtils.padWithSpaces("PF", 8) 
+                + StringUtils.padWithSpaces("PA", 8)
+                + StringUtils.padWithSpaces("PYF", 8)
+                + StringUtils.padWithSpaces("PYA", 8)
+                + StringUtils.padWithSpaces("RYF", 8)
+                + StringUtils.padWithSpaces("RYA", 8)
+                + StringUtils.padWithSpaces("TO", 8)
+                + StringUtils.padWithSpaces("TOC", 8);
+            System.out.println(title);
+        // possibly replace with lambda statement
+        try (Statement statement = connection.createStatement();
+            ResultSet pf = statement.executeQuery("SELECT Avg(PtsFor) FROM " + home)) {
+                while (pf.next()) {
+                    double ptsFor = pf.getDouble(1);
+                    System.out.print(StringUtils.padWithSpaces(Double.toString(ptsFor), 8));
+                }
+        } catch (SQLException e) {
+            System.out.println(e);
+        }
+        try (Statement statement = connection.createStatement();
+            ResultSet pa = statement.executeQuery("SELECT avg(PtsAll) FROM " + home)) {
+                while (pa.next()) {
+                    double ptsAll = pa.getDouble(1);            
+                    System.out.print(StringUtils.padWithSpaces(Double.toString(ptsAll), 8));
+                }
+        } catch (SQLException e) {
+            System.out.println(e);
+        }
+        try (Statement statement = connection.createStatement();
+            ResultSet pyf = statement.executeQuery("SELECT avg(PassYdsFor) FROM " + home)) {
+                while (pyf.next()) {
+                    double passYdsFor = pyf.getDouble(1);           
+                    System.out.print(StringUtils.padWithSpaces(Double.toString(passYdsFor), 8));
+                }
+        } catch (SQLException e) {
+            System.out.println(e);
+        }
+        try (Statement statement = connection.createStatement();
+            ResultSet pya = statement.executeQuery("SELECT avg(PassYdsAll) FROM " + home)) {
+                while (pya.next()) {
+                    double passYdsAll = pya.getDouble(1);           
+                    System.out.print(StringUtils.padWithSpaces(Double.toString(passYdsAll), 8));
+                }
+        } catch (SQLException e) {
+            System.out.println(e);
+        }
+        try (Statement statement = connection.createStatement();
+            ResultSet ryf = statement.executeQuery("SELECT avg(RushYdsFor) FROM " + home)) {
+                while (ryf.next()) {
+                    double rushYdsFor = ryf.getDouble(1);           
+                    System.out.print(StringUtils.padWithSpaces(Double.toString(rushYdsFor), 8));
+                }
+        } catch (SQLException e) {
+            System.out.println(e);
+        }
+        try (Statement statement = connection.createStatement();
+            ResultSet rya = statement.executeQuery("SELECT avg(RushYdsAll) FROM " + home)) {
+                while (rya.next()) {
+                    double rushYdsAll = rya.getDouble(1);           
+                    System.out.print(StringUtils.padWithSpaces(Double.toString(rushYdsAll), 8));
+                }
+        } catch (SQLException e) {
+            System.out.println(e);
+        }
+        try (Statement statement = connection.createStatement();
+            ResultSet to = statement.executeQuery("SELECT avg(TrnOvrsCom) FROM " + home)) {
+                while (to.next()) {
+                    double trnOvrCom = to.getDouble(1);           
+                    System.out.print(StringUtils.padWithSpaces(Double.toString(trnOvrCom), 8));
+                }
+        } catch (SQLException e) {
+            System.out.println(e);
+        }
+        try (Statement statement = connection.createStatement();
+            ResultSet toc = statement.executeQuery("SELECT avg(TrnOvrsCsd) FROM " + home)) {
+                while (toc.next()) {
+                    double trnOvrCsd = toc.getDouble(1);           
+                    System.out.println(StringUtils.padWithSpaces(Double.toString(trnOvrCsd), 8));
+                }
+        } catch (SQLException e) {
+            System.out.println(e);
+        }
+        System.out.println();      
     }
 
     private static void printTeam(FootballTeam p) {
