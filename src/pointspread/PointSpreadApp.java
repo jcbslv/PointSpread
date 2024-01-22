@@ -2,6 +2,7 @@ package pointspread;
 
 import java.sql.*;
 //import java.util.List;
+import java.text.NumberFormat;
 
 /**
  *
@@ -222,10 +223,9 @@ public class PointSpreadApp {
     }
 
     public static void getAvgStats() {
-        //Statement statement = connection.createStatement();
         String home = Console.getString("Enter team: ");
         System.out.println(home + " AVG Stats:");
-            String title
+        String title
                 = StringUtils.padWithSpaces("PF", 8) 
                 + StringUtils.padWithSpaces("PA", 8)
                 + StringUtils.padWithSpaces("PYF", 8)
@@ -234,13 +234,16 @@ public class PointSpreadApp {
                 + StringUtils.padWithSpaces("RYA", 8)
                 + StringUtils.padWithSpaces("TO", 8)
                 + StringUtils.padWithSpaces("TOC", 8);
-            System.out.println(title);
-        // possibly replace with lambda statement
+        System.out.println(title);
+        NumberFormat num = NumberFormat.getNumberInstance();
+        num.setMaximumFractionDigits(1);
+        
+//------------------------- possibly replace this section with lambda statement ------------------------
         try (Statement statement = connection.createStatement();
             ResultSet pf = statement.executeQuery("SELECT Avg(PtsFor) FROM " + home)) {
                 while (pf.next()) {
                     double ptsFor = pf.getDouble(1);
-                    System.out.print(StringUtils.padWithSpaces(Double.toString(ptsFor), 8));
+                    System.out.print(StringUtils.padWithSpaces(num.format(ptsFor), 8));
                 }
         } catch (SQLException e) {
             System.out.println(e);
@@ -249,7 +252,7 @@ public class PointSpreadApp {
             ResultSet pa = statement.executeQuery("SELECT avg(PtsAll) FROM " + home)) {
                 while (pa.next()) {
                     double ptsAll = pa.getDouble(1);            
-                    System.out.print(StringUtils.padWithSpaces(Double.toString(ptsAll), 8));
+                    System.out.print(StringUtils.padWithSpaces(num.format(ptsAll), 8));
                 }
         } catch (SQLException e) {
             System.out.println(e);
@@ -258,7 +261,7 @@ public class PointSpreadApp {
             ResultSet pyf = statement.executeQuery("SELECT avg(PassYdsFor) FROM " + home)) {
                 while (pyf.next()) {
                     double passYdsFor = pyf.getDouble(1);           
-                    System.out.print(StringUtils.padWithSpaces(Double.toString(passYdsFor), 8));
+                    System.out.print(StringUtils.padWithSpaces(num.format(passYdsFor), 8));
                 }
         } catch (SQLException e) {
             System.out.println(e);
@@ -267,7 +270,7 @@ public class PointSpreadApp {
             ResultSet pya = statement.executeQuery("SELECT avg(PassYdsAll) FROM " + home)) {
                 while (pya.next()) {
                     double passYdsAll = pya.getDouble(1);           
-                    System.out.print(StringUtils.padWithSpaces(Double.toString(passYdsAll), 8));
+                    System.out.print(StringUtils.padWithSpaces(num.format(passYdsAll), 8));
                 }
         } catch (SQLException e) {
             System.out.println(e);
@@ -276,7 +279,7 @@ public class PointSpreadApp {
             ResultSet ryf = statement.executeQuery("SELECT avg(RushYdsFor) FROM " + home)) {
                 while (ryf.next()) {
                     double rushYdsFor = ryf.getDouble(1);           
-                    System.out.print(StringUtils.padWithSpaces(Double.toString(rushYdsFor), 8));
+                    System.out.print(StringUtils.padWithSpaces(num.format(rushYdsFor), 8));
                 }
         } catch (SQLException e) {
             System.out.println(e);
@@ -285,7 +288,7 @@ public class PointSpreadApp {
             ResultSet rya = statement.executeQuery("SELECT avg(RushYdsAll) FROM " + home)) {
                 while (rya.next()) {
                     double rushYdsAll = rya.getDouble(1);           
-                    System.out.print(StringUtils.padWithSpaces(Double.toString(rushYdsAll), 8));
+                    System.out.print(StringUtils.padWithSpaces(num.format(rushYdsAll), 8));
                 }
         } catch (SQLException e) {
             System.out.println(e);
@@ -294,7 +297,7 @@ public class PointSpreadApp {
             ResultSet to = statement.executeQuery("SELECT avg(TrnOvrsCom) FROM " + home)) {
                 while (to.next()) {
                     double trnOvrCom = to.getDouble(1);           
-                    System.out.print(StringUtils.padWithSpaces(Double.toString(trnOvrCom), 8));
+                    System.out.print(StringUtils.padWithSpaces(num.format(trnOvrCom), 8));
                 }
         } catch (SQLException e) {
             System.out.println(e);
@@ -303,11 +306,12 @@ public class PointSpreadApp {
             ResultSet toc = statement.executeQuery("SELECT avg(TrnOvrsCsd) FROM " + home)) {
                 while (toc.next()) {
                     double trnOvrCsd = toc.getDouble(1);           
-                    System.out.println(StringUtils.padWithSpaces(Double.toString(trnOvrCsd), 8));
+                    System.out.println(StringUtils.padWithSpaces(num.format(trnOvrCsd), 8));
                 }
         } catch (SQLException e) {
             System.out.println(e);
         }
+// -----------------------------------------------------------------------------------------
         System.out.println();      
     }
 
